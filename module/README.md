@@ -17,4 +17,4 @@
 
 刷入模块并重启：刷入时模块安装包内 APK（`pm install -r -d`，结果写入模块目录的 `install.log`，签名不一致等失败不卸载已装应用），重启后相机、相册和系统框架都加载新版。同 ID 的模块原位更新。停用模块并重启即回退全部挂载。设置保存后相机下次读取即生效；快门声设置在铃声模式变化或重启相机后生效。
 
-`post-fs-data.sh` 重建资源前，先延迟卸载本模块在 `/odm/etc/` 的配置与资源绑定，再从原厂目录合并资源，支持 KSU 软重启时重复执行。`/odm/lib64` 的库挂载由 Hybrid Mount 与 `post-mount.sh` 管理。
+静态 `/odm` 配置、资源与库均位于 `system/odm/`，由元模块（NoMount / OverlayFS / Magic Mount）接管注入。`post-fs-data.sh` 负责软重启清理旧绑定、动态修补 `CameraHWConfiguration.config` 并统一设置 `system/odm` 的权限与 SELinux 上下文（不直接 `mount --bind`）；`post-mount.sh` 在检测到 NoMount 运行中时跳过全部 `mount --bind`（避免挂载泄露），未启用 NoMount 时则自动回退到兼容绑定挂载。

@@ -235,7 +235,9 @@ def run() -> None:
     the settings switch is on (unlock25mp.cpp), so nothing here is bound over /odm.
     """
     OUT.mkdir(exist_ok=True)
-    (OUT / "oplus_camera_aps_config").write_bytes(patched_aps((OUTPUT / "oplus_camera_aps_config").read_bytes()))
+    (OUT / "oplus_camera_aps_config").write_bytes(
+        patched_aps((PROJECT / "module/system/odm/etc/camera/config/oplus_camera_aps_config").read_bytes())
+    )
     for lens in LENSES:
         name = f"lighthouse{lens}"
         (OUT / name).write_bytes(patched_lighthouse((STOCK / name).read_bytes()))

@@ -14,7 +14,7 @@ from bake_rec709_to_serenity_mslut import bake, load_header, parse_cube
 PROJECT = Path(__file__).resolve().parent.parent
 
 SOURCE = PROJECT / "inputs/master_luts"
-OUTPUT = PROJECT / "module/payload/meishe_lut"
+OUTPUT = PROJECT / "module/system/odm/etc/camera/meishe_lut"
 HEADER = OUTPUT / "LeicaM9.cube.rgb.bin"
 
 ASSETS = [

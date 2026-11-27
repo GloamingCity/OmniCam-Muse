@@ -11,7 +11,7 @@ from pathlib import Path
 
 PROJECT = Path(__file__).resolve().parent.parent
 STOCK = PROJECT / "inputs/stock_audio/audio_policy_volumes.xml"
-OUTPUT = PROJECT / "module/payload/audio_policy_volumes.xml"
+OUTPUT = PROJECT / "module/system/odm/etc/audio/audio_policy_volumes.xml"
 
 CN_SPEAKER = """    <volume stream="AUDIO_STREAM_ENFORCED_AUDIBLE" deviceCategory="DEVICE_CATEGORY_SPEAKER">
         <point>1,-3500</point>

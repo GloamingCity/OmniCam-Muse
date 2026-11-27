@@ -169,7 +169,7 @@ uintptr_t loadLut(void *object, int mode) {
 }
 
 static void *resolveGetSettingInt(void *lmtAddress, void *imageBase) {
-    // getLmtParamsV1 reads frame_id at [x19, #0x24] (0xb9002660) right after `bl getSettingInt; ldrb w8, [sp, #0xc8]`.
+    // getLmtParamsV1 stores frame_id at [x19, #0x24] (0xb9002660) right after `bl getSettingInt; ldrb w8, [sp, #0xc8]`.
     const auto *code = static_cast<const uint32_t *>(lmtAddress);
     for (size_t i = 2; i < 0x800; ++i) {
         if (code[i] == 0xb9002660u && (code[i - 2] >> 26) == 0x25u) {

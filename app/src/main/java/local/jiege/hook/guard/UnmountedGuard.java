@@ -19,6 +19,9 @@ public final class UnmountedGuard {
     private static final String TAG = "UnmountedGuard";
     /** Bind-mounted from /data by the KSU module, so it sits on another device than its directory. */
     private static final String FEATURE_CONFIG = "/odm/etc/camera/config/camera_unit_feature_config.protobuf";
+    /** Module-added files used as fallback check when a VFS redirector (e.g. NoMount) spoofs st_dev. */
+    private static final String MODULE_LUT = "/odm/etc/camera/meishe_lut/polaroid_sdr.mslut";
+    private static final String MODULE_LIB = "/odm/lib64/libBasicTonePhotoX10.so";
 
     private static volatile Object modeKey;
     private static volatile boolean logged;
@@ -27,7 +30,13 @@ public final class UnmountedGuard {
 
     public static boolean filesMounted() {
         try {
-            return Os.stat(FEATURE_CONFIG).st_dev != Os.stat("/odm/etc/camera/config").st_dev;
+            if (Os.stat(FEATURE_CONFIG).st_dev != Os.stat("/odm/etc/camera/config").st_dev) {
+                return true;
+            }
+        } catch (Exception ignored) {
+        }
+        try {
+            return Os.stat(MODULE_LUT).st_size > 0 && Os.stat(MODULE_LIB).st_size > 0;
         } catch (Exception error) {
             return false;
         }

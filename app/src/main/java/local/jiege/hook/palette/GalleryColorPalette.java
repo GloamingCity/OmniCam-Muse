@@ -8,6 +8,7 @@ import de.robv.android.xposed.XC_MethodReplacement;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import java.io.File;
+import java.util.Map;
 import local.jiege.hook.common.Log;
 import local.jiege.hook.common.Symbols;
 
@@ -72,9 +73,31 @@ public final class GalleryColorPalette {
      */
     private static void p010PathOnly(ClassLoader sdkLoader) {
         String sdk = "com.oplus.ocs.camera.ipusdk.processunit.palette.PaletteProcessUnitSDK";
+        Class<?> requestKeyClass = XposedHelpers.findClass("com.oplus.ocs.camera.ipusdk.processunit.RequestKey", sdkLoader);
+        final Object captureBufferMsbKey = XposedHelpers.newInstance(
+            requestKeyClass, "capture_buffer_msb", Integer.class, Integer.valueOf(0));
         XposedHelpers.findAndHookMethod(sdk, sdkLoader, "isTextureRequest", XC_MethodReplacement.returnConstant(Boolean.FALSE));
         XposedHelpers.findAndHookMethod(sdk, sdkLoader, "processImage", new XC_MethodHook() {
             @Override protected void beforeHookedMethod(MethodHookParam param) {
+                try {
+                    Object entities = XposedHelpers.getObjectField(param.thisObject, "mRequestEntities");
+                    if (entities != null) {
+                        @SuppressWarnings("unchecked")
+                        Map<String, Object> defined = (Map<String, Object>) XposedHelpers.getObjectField(
+                            entities, "mSdkFeatureDefinedProcessKeys");
+                        if (defined != null && !defined.containsKey("capture_buffer_msb")) {
+                            defined.put("capture_buffer_msb", captureBufferMsbKey);
+                        }
+                        @SuppressWarnings("unchecked")
+                        Map<Object, Object> apiParams = (Map<Object, Object>) XposedHelpers.getObjectField(
+                            entities, "mApiProcessParameters");
+                        if (apiParams != null) {
+                            apiParams.put(captureBufferMsbKey, Integer.valueOf(2));
+                        }
+                    }
+                } catch (Throwable error) {
+                    Log.e(TAG, "capture_buffer_msb override failed", error);
+                }
                 EGLContext context = EGL14.eglGetCurrentContext();
                 if (context == null || context == EGL14.EGL_NO_CONTEXT) return;
                 if (XposedHelpers.getObjectField(param.thisObject, "mShareGlContext") != null) return;

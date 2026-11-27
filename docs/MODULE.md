@@ -8,7 +8,7 @@ Find X9 Ultra（PMA110，相机 7.006.103）上各项功能的原理与涉及文
 
 1. 开关 `feature_is_support_color_palette` 要求 `ro.product.first_api_level >= 37`，本机是 36，其余条件（相机 `com.oplus.feature.color.palette.support`、IPU 调色盘、Find 系列、工程保存）都满足。钩子 `palette/GalleryColorPalette` 只把这一个开关答为真。
 2. 调色盘模式经 `CombineLutProcessUnitSDK`、`PaletteColorTable` 出图，本机系统的 `com.oplus.camera.unit.sdk.jar` 没有这两个类，所有风格都渲染失败。`payload/ipu/` 是 X10（PMW110 A.50）的同名 jar，`service.sh` 放到相册 `files/jiege_ipu`（root 只读，SELinux 类别取目录的），钩子用 `ClassLoaderFactory` 以共享命名空间（库路径 `/product/lib64:/system/lib64`）建加载器，替换相册的该共享库加载器。两机的 JNI 库（`libCombineLutJni` 等）相同。jar 不可读时开关也不打开。
-3. 出图路径：相册给 SDK 的是 GL 纹理；X10 SDK 的纹理直送分支（APS 纹理入口，`processImages`）本机没有，钩子让 `isTextureRequest` 为假，SDK 改走 GL 流水线，在 GPU 上转成 P010 后交给 `ipuColorPaletteProcess`（本机相册输入即 P010，`HBV16 for gallery P010`），再由 `libBasicTonePhoto.so` 路由到 X10 后端（相册传 CamMode 6）。调色表来自 `payload/x10_basictone/palette`。
+3. 出图路径：相册给 SDK 的是 GL 纹理；X10 SDK 的纹理直送分支（APS 纹理入口，`processImages`）本机没有，钩子让 `isTextureRequest` 为假，并在 `processImage` 前补齐 `capture_buffer_msb = 2`（`MSBTOMSB`，兼容未单独打 `HBV16` 二进制补丁的 `libAlgoInterface.so`），SDK 改走 GL 流水线，在 GPU 上转成 P010 后交给 `ipuColorPaletteProcess`（本机相册输入即 P010），再由 `libBasicTonePhoto.so` 路由到 X10 后端（相册传 CamMode 6）。调色表位于 `system/odm/etc/camera/basictone/palette`。
 
 相册的滤镜列表来自同一个 SDK 的 `FilterGroupManager`：`GalleryFilters` 在它初始化后把目录里默认开启的模块滤镜追加到普通组和大师组末尾（名称用目录标题，原厂序号不变）；导入滤镜在相机私有目录、相册读不到，不列出；LUT 不在 `/odm/etc/camera/meishe_lut`、`filters_lut` 的也不列出。
 
@@ -27,7 +27,7 @@ Find X9 Ultra（PMA110，相机 7.006.103）上各项功能的原理与涉及文
 POP 的光感、自然饱和度、色温、色调随拍照参数以 `KEY_MASTER_MODE_*` 送到引擎，成片要生效就必须经过 BasicTone。拍照链路里有四道门：
 
 1. 初始化名单：SDK 把 `retro_camera_mode` 映射为 `common` 拍照配置，`oplus_camera_algo_switch_config` 里 `common` 的前后置项 `aps_algo_basic_tone` 都必须为 1，引擎才注册 BasicTone。
-2. 决策规则：`SINGLE_ALGO_BASIC_TONE` 的条件要有 POP 分支（`REAR_NORMAL` 且 `retro_camera_mode`），另加前置 POP 分支（`FRONT_NORMAL` 且 `retro_camera_mode`，SDR 下前置靠它进入算法清单，其余模式要求 `ultra_hdr_enable`），并对其余使用 `common` 的后置三个模式、`AI_HIGH_PIXEL` 和前置 `FRONT_NORMAL/BOKEH/NIGHT` 加“非 POP”守卫，使它们保持原行为。文件：`payload/oplus_camera_preview_decision_config.json`（`post-fs-data.sh` 绑定到 `/odm`）与 `payload/unlock25mp/…` 同名文件（25MP 开关打开时读取）。
+2. 决策规则：`SINGLE_ALGO_BASIC_TONE` 的条件要有 POP 分支（`REAR_NORMAL` 且 `retro_camera_mode`），另加前置 POP 分支（`FRONT_NORMAL` 且 `retro_camera_mode`，SDR 下前置靠它进入算法清单，其余模式要求 `ultra_hdr_enable`），并对其余使用 `common` 的后置三个模式、`AI_HIGH_PIXEL` 和前置 `FRONT_NORMAL/BOKEH/NIGHT` 加“非 POP”守卫，使它们保持原行为。文件：`system/odm/etc/camera/config/oplus_camera_preview_decision_config.json`（由元模块注入 `/odm`）与 `payload/unlock25mp/…` 同名文件（25MP 开关打开时读取）。
 3. 流水线节点：`ApsCapDecisionRearNormal25021::addCommonPipelines` 与 `ApsCapDecisionFrontNormal25021::addCommonPipelines` 只在 `ultra_hdr_enable` 为真时加入 BasicTone 节点（算法 0x4e，三个节点）。
 4. 全 0 跳过：BasicTone 预检在 POP 且四个值全 0 时直接返回；HybridRaw 交给它的是 10bit P010，跳过会把 P010 直接送去编码，主图损坏。
 
@@ -53,7 +53,7 @@ POP 在 0.6x 拍照会让 HAL（`vendor.qti.camera.provider-service`）在 `Node
 
 相机里完整的移轴模式出厂关闭，引擎算法 `aps_algo_tilt_shift`、GL 预览库和 `libCaptureBokeh.so` 的 `TiltShiftBokeh` 都在，缺的是配置，四层各需一处：
 
-1. 特性标志 `com.oplus.feature.tilt.shift.photo.support`：HAL 侧写在 `payload/oplus_camera_config`（任何进程启动即可见），应用侧由 `service.sh` 写进相机 `override_config_data.xml`。
+1. 特性标志 `com.oplus.feature.tilt.shift.photo.support`：HAL 侧写在 `system/odm/etc/camera/config/oplus_camera_config`（任何进程启动即可见），应用侧由 `service.sh` 写进相机 `override_config_data.xml`。
 2. 模式列表数据库 `mode_data.db`：按特性标志建库，`service.sh` 开机检查库里有没有 `tiltShift` 行，没有就删库一次（`$MODDIR/tilt_db_reset` 标记保证一次）。不能靠抬高 `com.oplus.camera.mode.data.db.version`：HAL 里它是 Byte（最大 127），且重启后系统会在覆盖配置加载前先起相机进程，对 203 的库做“降级”重建。所以版本保持 102。
 3. 镜头支持：`camera_unit_config` 把 `tilt_shift_mode`（操作模式 8001）加进五个后置镜头的 `mode_type_list`，并按 `photo_mode` 复制 `capture_stream_number`。
 4. 界面特性：`camera_unit_feature_config.protobuf` 追加特性 `com.oplus.camera.feature.tilt.shift`，新增 `tilt_shift_mode` 条目（复制 `photo_mode`，`TiltShiftPhotoMode` 继承 `PhotoMode`），并在 `common` 与各后置镜头组追加该特性；前置不加。
@@ -83,7 +83,7 @@ PMA110 的 HDRTransform 输入虽然称为 P010，实拍转储中的 10 位值�
 
 相机看不到设置应用（包可见性），所以由应用来问：`call(com.oplus.camera.entry, "jiege.diagnostics")` 落到相机导出的 `EntryProvider.call`，钩子（`hook/common/Diagnostics.java`）只对模块 uid 返回状态：符号解析数、缺失数、错误行数、进程启动时间、加载钩子的模块 APK、最近 600 行模块日志，以及相机的大师滤镜原厂列表（应用存进 `MasterFilterStore`）。调用会在相机未运行时拉起相机进程。`Log.e` 计入错误数。
 
-主页状态（`ui/Diagnostics.kt`）：LSPosed（xposedsharedprefs 可用）、KSU 模块（`/odm/lib64/libAlgoInterface.so` 与 `/odm/lib64` 不在同一设备，即绑定挂载生效）、相机注入、符号匹配、功能加载。全部正常时状态卡为绿色；相机仍跑着旧模块 APK 时为橙色，提示重启相机；其余异常为红色。“重启相机”“重启相册”用 `su -c am force-stop` 后重新打开，没有 Root 授权时打开应用信息页。主页的“日志”是二级页：“开启日志”用 Root 起一个 logcat 写入应用缓存（两个 8 MiB 轮转文件），关闭时停止并保留；“导出日志”写一个 zip：概要、相机状态与日志、模块设置（授权码只标记已保存）、大师滤镜配置、应用自身 logcat，有 Root 时加 LSPosed 模块日志、logcat 与记录下的日志。
+主页状态（`ui/Diagnostics.kt`）：LSPosed（xposedsharedprefs 可用）、KSU 模块（`/odm/lib64/libAlgoInterface.so` 与 `/odm/lib64` 不在同一设备，或 NoMount 等 VFS 重定向下 `/odm/lib64/libBasicTonePhotoX10.so` 存在且非空）、相机注入、符号匹配、功能加载。全部正常时状态卡为绿色；相机仍跑着旧模块 APK 时为橙色，提示重启相机；其余异常为红色。“重启相机”“重启相册”用 `su -c am force-stop` 后重新打开，没有 Root 授权时打开应用信息页。主页的“日志”是二级页：“开启日志”用 Root 起一个 logcat 写入应用缓存（两个 8 MiB 轮转文件），关闭时停止并保留；“导出日志”写一个 zip：概要、相机状态与日志、模块设置（授权码只标记已保存）、大师滤镜配置、应用自身 logcat，有 Root 时加 LSPosed 模块日志、logcat 与记录下的日志。
 
 ## 理光 GR 快门声
 

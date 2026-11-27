@@ -42,7 +42,7 @@ public final class LutBakerOfflineTest {
                 cube = Rec709LutBaker.parse(reader);
             }
             byte[] java = Rec709LutBaker.bake(cube, header);
-            byte[] python = Files.readAllBytes(project.resolve("module/payload/meishe_lut").resolve(pair[1]));
+            byte[] python = Files.readAllBytes(project.resolve("module/system/odm/etc/camera/meishe_lut").resolve(pair[1]));
             if (java.length != python.length) fail(pair[1] + ": size " + java.length + " vs " + python.length);
             for (int i = 0; i < Rec709LutBaker.HEADER_SIZE; i++) if (java[i] != python[i]) fail(pair[1] + ": header differs at " + i);
             int fileOff1 = 0;

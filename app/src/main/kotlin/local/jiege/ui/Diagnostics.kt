@@ -95,11 +95,19 @@ internal class InjectionState(val checks: List<Check>, val health: Health) {
             return InjectionState(checks, health)
         }
 
-        /** The module's camera libraries are bind-mounted over /odm, so they sit on another device. */
-        private fun moduleMounted(): Boolean = try {
-            Os.stat("/odm/lib64/libAlgoInterface.so").st_dev != Os.stat("/odm/lib64").st_dev
-        } catch (_: Exception) {
-            false
+        /** The module's camera libraries are bind-mounted over /odm (or VFS-redirected by NoMount). */
+        private fun moduleMounted(): Boolean {
+            try {
+                if (Os.stat("/odm/lib64/libAlgoInterface.so").st_dev != Os.stat("/odm/lib64").st_dev) {
+                    return true
+                }
+            } catch (_: Exception) {
+            }
+            return try {
+                Os.stat("/odm/lib64/libBasicTonePhotoX10.so").st_size > 0L
+            } catch (_: Exception) {
+                false
+            }
         }
     }
 }

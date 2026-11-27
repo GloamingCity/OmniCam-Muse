@@ -118,118 +118,6 @@
       ]
     },
     {
-      "mode": "retroCamera",
-      "entity": [
-        {
-          "id": 0,
-          "enable": 1,
-          "aps_algo_blurless": 0,
-          "aps_algo_portraitrepair": 0,
-          "aps_algo_bokeh": 0,
-          "aps_algo_hdr": 0,
-          "aps_algo_lowlight_hdr": 0,
-          "aps_algo_raw_hdr": 0,
-          "aps_algo_pf": 0,
-          "aps_algo_fusion": 1,
-          "aps_algo_rectify": 1,
-          "aps_algo_supernight": 0,
-          "aps_algo_superphoto": 0,
-          "aps_algo_watermark": 1,
-          "aps_algo_facebase_retouch": 1,
-          "aps_algo_face_beauty": 1,
-          "aps_algo_face_restore": 1,
-          "aps_algo_rotate_mirror": 1,
-          "aps_algo_filter": 1,
-          "aps_algo_single_blur": 0,
-          "aps_algo_upscale": 1,
-          "aps_algo_video_blur": 0,
-          "aps_algo_darksight": 0,
-          "aps_algo_opxwatermark": 0,
-          "aps_algo_deflicker": 0,
-          "aps_algo_portrait_supernight": 0,
-          "aps_algo_supersensor": 0,
-          "aps_algo_face_rectify": 1,
-          "aps_algo_super_text": 0,
-          "aps_algo_pf_v1": 0,
-          "aps_algo_dered_eye": 0,
-          "aps_algo_face_info": 1,
-          "aps_algo_scportrait": 0,
-          "aps_algo_couple_hdr": 0,
-          "aps_algo_cfr": 1,
-          "aps_algo_tilt_shift": 1,
-          "aps_algo_ice_ainr": 1,
-          "aps_algo_ai_sr": 1,
-          "aps_algo_merge_hdr": 0,
-          "aps_algo_turbo_hdr": 1,
-          "aps_algo_hybridraw": 1,
-          "aps_algo_text_enhance": 0,
-          "aps_algo_aimoon": 0,
-          "aps_algo_oplus_segment": 1,
-          "aps_algo_fb_hdr_convert": 1,
-          "aps_algo_sw_png_encode": 1,
-          "aps_algo_mask_refine": 1,
-          "aps_algo_basic_tone": 1,
-          "aps_algo_hdr_transform": 1,
-          "aps_algo_edof": 1,
-          "aps_algo_mfnr": 1,
-          "aps_algo_dcg_fusion": 1,
-          "aps_algo_rsp": 1,
-          "aps_algo_document_rectify": 1,
-          "aps_algo_colorsensor": 1
-        },
-        {
-          "id": 1,
-          "enable": 1,
-          "aps_algo_blurless": 0,
-          "aps_algo_portraitrepair": 0,
-          "aps_algo_bokeh": 0,
-          "aps_algo_hdr": 0,
-          "aps_algo_lowlight_hdr": 0,
-          "aps_algo_raw_hdr": 0,
-          "aps_algo_pf": 0,
-          "aps_algo_fusion": 0,
-          "aps_algo_rectify": 0,
-          "aps_algo_supernight": 0,
-          "aps_algo_superphoto": 0,
-          "aps_algo_watermark": 1,
-          "aps_algo_facebase_retouch": 1,
-          "aps_algo_face_beauty": 1,
-          "aps_algo_face_restore": 1,
-          "aps_algo_rotate_mirror": 1,
-          "aps_algo_filter": 1,
-          "aps_algo_single_blur": 0,
-          "aps_algo_upscale": 1,
-          "aps_algo_video_blur": 0,
-          "aps_algo_darksight": 0,
-          "aps_algo_opxwatermark": 0,
-          "aps_algo_deflicker": 0,
-          "aps_algo_portrait_supernight": 1,
-          "aps_algo_supersensor": 0,
-          "aps_algo_face_rectify": 1,
-          "aps_algo_super_text": 0,
-          "aps_algo_pf_v1": 0,
-          "aps_algo_dered_eye": 0,
-          "aps_algo_face_info": 1,
-          "aps_algo_scportrait": 0,
-          "aps_algo_pic_best": 0,
-          "aps_algo_cfr": 0,
-          "aps_algo_ai_deblur": 0,
-          "aps_algo_turbo_hdr": 1,
-          "aps_algo_merge_hdr": 0,
-          "aps_algo_sw_png_encode": 1,
-          "aps_algo_oplus_segment": 1,
-          "aps_algo_fb_hdr_convert": 1,
-          "aps_algo_mask_refine": 0,
-          "aps_algo_hybridraw": 1,
-          "aps_algo_basic_tone": 1,
-          "aps_algo_hdr_transform": 1,
-          "aps_algo_mfnr": 1,
-          "aps_algo_dcg_fusion": 1,
-          "aps_algo_rsp": 1
-        }
-      ]
-    },
-    {
       "mode": "night",
       "entity": [
         {
@@ -1071,6 +959,118 @@
       ]
     },
     {
+      "mode": "retroCamera",
+      "entity": [
+        {
+          "id": 0,
+          "enable": 1,
+          "aps_algo_blurless": 0,
+          "aps_algo_portraitrepair": 0,
+          "aps_algo_bokeh": 0,
+          "aps_algo_hdr": 0,
+          "aps_algo_lowlight_hdr": 0,
+          "aps_algo_raw_hdr": 0,
+          "aps_algo_pf": 0,
+          "aps_algo_fusion": 1,
+          "aps_algo_rectify": 1,
+          "aps_algo_supernight": 0,
+          "aps_algo_superphoto": 0,
+          "aps_algo_watermark": 1,
+          "aps_algo_facebase_retouch": 1,
+          "aps_algo_face_beauty": 1,
+          "aps_algo_face_restore": 1,
+          "aps_algo_rotate_mirror": 1,
+          "aps_algo_filter": 1,
+          "aps_algo_single_blur": 0,
+          "aps_algo_upscale": 1,
+          "aps_algo_video_blur": 0,
+          "aps_algo_darksight": 0,
+          "aps_algo_opxwatermark": 0,
+          "aps_algo_deflicker": 0,
+          "aps_algo_portrait_supernight": 0,
+          "aps_algo_supersensor": 0,
+          "aps_algo_face_rectify": 1,
+          "aps_algo_super_text": 0,
+          "aps_algo_pf_v1": 0,
+          "aps_algo_dered_eye": 0,
+          "aps_algo_face_info": 1,
+          "aps_algo_scportrait": 0,
+          "aps_algo_couple_hdr": 0,
+          "aps_algo_cfr": 1,
+          "aps_algo_tilt_shift": 1,
+          "aps_algo_ice_ainr": 1,
+          "aps_algo_ai_sr": 1,
+          "aps_algo_merge_hdr": 0,
+          "aps_algo_turbo_hdr": 1,
+          "aps_algo_hybridraw": 1,
+          "aps_algo_text_enhance": 0,
+          "aps_algo_aimoon": 0,
+          "aps_algo_oplus_segment": 1,
+          "aps_algo_fb_hdr_convert": 1,
+          "aps_algo_sw_png_encode": 1,
+          "aps_algo_mask_refine": 1,
+          "aps_algo_basic_tone": 1,
+          "aps_algo_hdr_transform": 1,
+          "aps_algo_edof": 1,
+          "aps_algo_mfnr": 1,
+          "aps_algo_dcg_fusion": 1,
+          "aps_algo_rsp": 1,
+          "aps_algo_document_rectify": 1,
+          "aps_algo_colorsensor": 1
+        },
+        {
+          "id": 1,
+          "enable": 1,
+          "aps_algo_blurless": 0,
+          "aps_algo_portraitrepair": 0,
+          "aps_algo_bokeh": 0,
+          "aps_algo_hdr": 0,
+          "aps_algo_lowlight_hdr": 0,
+          "aps_algo_raw_hdr": 0,
+          "aps_algo_pf": 0,
+          "aps_algo_fusion": 0,
+          "aps_algo_rectify": 0,
+          "aps_algo_supernight": 0,
+          "aps_algo_superphoto": 0,
+          "aps_algo_watermark": 1,
+          "aps_algo_facebase_retouch": 1,
+          "aps_algo_face_beauty": 1,
+          "aps_algo_face_restore": 1,
+          "aps_algo_rotate_mirror": 1,
+          "aps_algo_filter": 1,
+          "aps_algo_single_blur": 0,
+          "aps_algo_upscale": 1,
+          "aps_algo_video_blur": 0,
+          "aps_algo_darksight": 0,
+          "aps_algo_opxwatermark": 0,
+          "aps_algo_deflicker": 0,
+          "aps_algo_portrait_supernight": 1,
+          "aps_algo_supersensor": 0,
+          "aps_algo_face_rectify": 1,
+          "aps_algo_super_text": 0,
+          "aps_algo_pf_v1": 0,
+          "aps_algo_dered_eye": 0,
+          "aps_algo_face_info": 1,
+          "aps_algo_scportrait": 0,
+          "aps_algo_pic_best": 0,
+          "aps_algo_cfr": 0,
+          "aps_algo_ai_deblur": 0,
+          "aps_algo_turbo_hdr": 1,
+          "aps_algo_merge_hdr": 0,
+          "aps_algo_sw_png_encode": 1,
+          "aps_algo_oplus_segment": 1,
+          "aps_algo_fb_hdr_convert": 1,
+          "aps_algo_mask_refine": 0,
+          "aps_algo_hybridraw": 1,
+          "aps_algo_basic_tone": 1,
+          "aps_algo_hdr_transform": 1,
+          "aps_algo_mfnr": 1,
+          "aps_algo_dcg_fusion": 1,
+          "aps_algo_rsp": 1
+        }
+      ]
+    },
+    {
       "mode": "grmode",
       "entity": [
         {
@@ -1117,102 +1117,6 @@
   "aps_preview_configs": [
     {
       "mode": "common",
-      "entity": [
-        {
-          "id": 0,
-          "camera_num": 3,
-          "separate_preview_video": 0,
-          "pipelines": {
-            "preview": {
-              "enable": 1,
-              "master_input_width": 1440,
-              "master_input_height": 1080,
-              "slave_input_width": 1440,
-              "slave_input_height": 1080,
-              "third_input_width": 1440,
-              "third_input_height": 1080,
-              "output_width": 1440,
-              "output_height": 1080,
-              "skip_frame_cnt": 0,
-              "pipeline_copy_from": "",
-              "algonode_copy_from": "",
-              "algo_list": [
-                "preview_rectify",
-                "preview_supereis"
-              ]
-            },
-            "video": {
-              "enable": 0
-            },
-            "asd": {
-              "enable": 1,
-              "master_input_width": 1440,
-              "master_input_height": 1080,
-              "slave_input_width": 0,
-              "slave_input_height": 0,
-              "third_input_width": 0,
-              "third_input_height": 0,
-              "output_width": 1440,
-              "output_height": 1080,
-              "skip_frame_cnt": 0,
-              "pipeline_copy_from": "pipeline_default",
-              "algonode_copy_from": "preview_default",
-              "algo_list": [
-                "preview_asd",
-                "preview_document_detection"
-              ]
-            }
-          }
-        },
-        {
-          "id": 1,
-          "camera_num": 1,
-          "separate_preview_video": 0,
-          "pipelines": {
-            "preview": {
-              "enable": 1,
-              "master_input_width": 1440,
-              "master_input_height": 1080,
-              "slave_input_width": 0,
-              "slave_input_height": 0,
-              "third_input_width": 0,
-              "third_input_height": 0,
-              "output_width": 1440,
-              "output_height": 1080,
-              "skip_frame_cnt": 0,
-              "pipeline_copy_from": "",
-              "algonode_copy_from": "",
-              "algo_list": [
-                "preview_default"
-              ]
-            },
-            "video": {
-              "enable": 0
-            },
-            "asd": {
-              "enable": 1,
-              "master_input_width": 1440,
-              "master_input_height": 1080,
-              "slave_input_width": 0,
-              "slave_input_height": 0,
-              "third_input_width": 0,
-              "third_input_height": 0,
-              "output_width": 1440,
-              "output_height": 1080,
-              "skip_frame_cnt": 0,
-              "pipeline_copy_from": "pipeline_default",
-              "algonode_copy_from": "preview_default",
-              "algo_list": [
-                "preview_asd",
-                "preview_gesture"
-              ]
-            }
-          }
-        }
-      ]
-    },
-    {
-      "mode": "retroCamera",
       "entity": [
         {
           "id": 0,
@@ -3738,6 +3642,102 @@
               "pipeline_copy_from": "pipeline_default",
               "algonode_copy_from": "preview_default",
               "algo_list": [
+                "preview_gesture"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "mode": "retroCamera",
+      "entity": [
+        {
+          "id": 0,
+          "camera_num": 3,
+          "separate_preview_video": 0,
+          "pipelines": {
+            "preview": {
+              "enable": 1,
+              "master_input_width": 1440,
+              "master_input_height": 1080,
+              "slave_input_width": 1440,
+              "slave_input_height": 1080,
+              "third_input_width": 1440,
+              "third_input_height": 1080,
+              "output_width": 1440,
+              "output_height": 1080,
+              "skip_frame_cnt": 0,
+              "pipeline_copy_from": "",
+              "algonode_copy_from": "",
+              "algo_list": [
+                "preview_rectify",
+                "preview_supereis"
+              ]
+            },
+            "video": {
+              "enable": 0
+            },
+            "asd": {
+              "enable": 1,
+              "master_input_width": 1440,
+              "master_input_height": 1080,
+              "slave_input_width": 0,
+              "slave_input_height": 0,
+              "third_input_width": 0,
+              "third_input_height": 0,
+              "output_width": 1440,
+              "output_height": 1080,
+              "skip_frame_cnt": 0,
+              "pipeline_copy_from": "pipeline_default",
+              "algonode_copy_from": "preview_default",
+              "algo_list": [
+                "preview_asd",
+                "preview_document_detection"
+              ]
+            }
+          }
+        },
+        {
+          "id": 1,
+          "camera_num": 1,
+          "separate_preview_video": 0,
+          "pipelines": {
+            "preview": {
+              "enable": 1,
+              "master_input_width": 1440,
+              "master_input_height": 1080,
+              "slave_input_width": 0,
+              "slave_input_height": 0,
+              "third_input_width": 0,
+              "third_input_height": 0,
+              "output_width": 1440,
+              "output_height": 1080,
+              "skip_frame_cnt": 0,
+              "pipeline_copy_from": "",
+              "algonode_copy_from": "",
+              "algo_list": [
+                "preview_default"
+              ]
+            },
+            "video": {
+              "enable": 0
+            },
+            "asd": {
+              "enable": 1,
+              "master_input_width": 1440,
+              "master_input_height": 1080,
+              "slave_input_width": 0,
+              "slave_input_height": 0,
+              "third_input_width": 0,
+              "third_input_height": 0,
+              "output_width": 1440,
+              "output_height": 1080,
+              "skip_frame_cnt": 0,
+              "pipeline_copy_from": "pipeline_default",
+              "algonode_copy_from": "preview_default",
+              "algo_list": [
+                "preview_asd",
                 "preview_gesture"
               ]
             }

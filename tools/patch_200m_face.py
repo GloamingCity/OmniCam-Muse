@@ -12,6 +12,7 @@ from pathlib import Path
 
 PROJECT = Path(__file__).resolve().parent.parent
 PAYLOAD = PROJECT / "module/payload"
+ODM_CONFIG = PROJECT / "module/system/odm/etc/camera/config"
 OUT = PAYLOAD / "face200m"
 DECISION = "oplus_camera_preview_decision_config.json"
 NODES = ("ALGO_HR_HP_W1XF_200M", "ALGO_HR_HP_T3XF_200M")
@@ -44,7 +45,7 @@ def patched(source: Path) -> bytes:
 
 def run() -> None:
     (OUT / "unlock25mp").mkdir(parents=True, exist_ok=True)
-    (OUT / DECISION).write_bytes(patched(PAYLOAD / DECISION))
+    (OUT / DECISION).write_bytes(patched(ODM_CONFIG / DECISION))
     (OUT / "unlock25mp" / DECISION).write_bytes(patched(PAYLOAD / "unlock25mp" / DECISION))
     print("200M face gate: 2 nodes in 2 decision copies")
 
